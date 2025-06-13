@@ -1,85 +1,38 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { NConfigProvider, NMessageProvider, darkTheme } from 'naive-ui'
+import DefaultLayout from './layouts/DefaultLayout.vue'
+import { ref, watchEffect } from 'vue'
+
+const isDark = ref(localStorage.getItem('theme'))
+
+// 自动保存到 localStorage
+watchEffect(() => {
+  localStorage.setItem('theme', isDark)
+})
+
+// 主题自定义（可省略）
+const themeOverrides = {
+  common: {
+    primaryColor: '#18a058'
+  }
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <n-config-provider class="m0" :theme="isDark ? darkTheme : null" :theme-overrides="themeOverrides">
+    <n-message-provider>
+      <DefaultLayout class="full-width-container" :is-dark-ref="isDark" @toggle-theme="() => (isDark=!isDark)" />
+    </n-message-provider>
+  </n-config-provider>
 </template>
 
+
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+.full-width-container {
+  margin: 0;
+  margin-top: 0;
+  width: 100vw; /* 占满视口宽度 */
+  max-width: 100vw;
+  overflow-x: hidden; /* 可选：防止横向滚动条 */
 }
 </style>
