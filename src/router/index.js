@@ -3,6 +3,7 @@ import Home from '@/views/HomeView.vue'
 import Domain from '@/views/DomainView.vue'
 import Ssl from '@/views/SslsView.vue'
 import Recipe from '@/views/RecipeView.vue'
+import RecipeInfo from '@/views/RecipeInfoView.vue'
 import Login from '@/views/LoginView.vue'
 
 const routes = [
@@ -10,6 +11,7 @@ const routes = [
   { path: '/domain', component: Domain,meta: { requiresAuth: true } },
   { path: '/ssl', component: Ssl,meta: { requiresAuth: true } },
   { path: '/recipe', component: Recipe,meta: { requiresAuth: true } },
+  { path: '/recipe_info', component: RecipeInfo,meta: { requiresAuth: true } },
   {
     path: '/login',
     component: Login

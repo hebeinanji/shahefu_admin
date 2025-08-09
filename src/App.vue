@@ -65,6 +65,7 @@ export default {
 <template>
   <n-config-provider class="m0" :theme="theme" :locale="zhCN">
     <n-message-provider>
+      <n-dialog-provider>
       <n-layout position="absolute">
         <n-layout-header
           bordered
@@ -81,7 +82,7 @@ export default {
               bordered
               collapse-mode="width"
               :collapsed-width="64"
-              :width="240"
+              :width="160"
               :collapsed="collapsed"
               show-trigger
               @collapse="collapsed = true"
@@ -103,6 +104,7 @@ export default {
           </n-layout>
         </n-layout-content>
       </n-layout>
+      </n-dialog-provider>
     </n-message-provider>
   </n-config-provider>
 </template>
