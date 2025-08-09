@@ -5,88 +5,77 @@ import {
   NMenu,
   NLayoutHeader,
   NLayoutContent,
+  darkTheme,
+  lightTheme,
+  zhCN,dateZhCN,
   NButton,
   NIcon
 } from 'naive-ui'
 import { useRouter, RouterView } from 'vue-router'
 import { ref } from 'vue'
+import Nav from '../components/Nav.vue';
 import { Moon, Sun } from '@vicons/fa'
 
-const props = defineProps({
-  isDarkRef: {
-    type: Boolean,
-    required: true
-  }
-})
-const emit = defineEmits(['toggle-theme'])
+const emit = defineEmits(['change-theme'])
 
 const collapsed = ref(false)
+let isDark = ref(true)
 const router = useRouter()
 
 const menuOptions = [
-  { label: '首页', key: '/' },
-  { label: '关于', key: '/about' },
-  { label: '域名列表', key: '/domain' },
-  { label: '证书列表', key: '/ssl' }
+  { label: '首页', key: '/',href: '/' },
+  { label: '关于', key: '/about',href: '/about' },
+  { label: '域名列表', key: '/domain',href: '/domain' },
+  { label: '证书列表', key: '/ssl',href: '/ssl' },
+  { label: '菜谱列表', key: '/recipe',href: '/recipe' },
 ]
 
-function handleMenuClick(key) {
-  router.push(key)
+function changeTheme(dark) {
+  localStorage.setItem("isDark", dark);
+  isDark = dark;
 }
+
 </script>
 
 <template>
-  <n-layout has-sider>
-    <!-- 左侧菜单栏 -->
-    <n-layout-sider :collapsed="collapsed" collapse-mode="width" :width="200" show-trigger>
-      <n-menu
-        :options="menuOptions"
-        :collapsed="collapsed"
-        :default-value="router.currentRoute.value.path"
-        @update:value="handleMenuClick"
-      />
-    </n-layout-sider>
+  <n-layout position="absolute">
+    <n-layout-header
+      bordered
+      style="height: 64px; padding: 0 24px; background-color: #fff;"
+      position="absolute">
+      <Nav :isDark="isDark" @change-theme="changeTheme" />
+    </n-layout-header>
+    <n-layout-content
+      position="absolute"
+      style="top: 64px; bottom: 0; background-color: #f5f5f5;">
 
-    <!-- 主区域 -->
-    <n-layout>
-      <n-layout-header
-        style="
-          height: 64px;
-          padding: 0 20px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          border-bottom: 1px solid var(--n-border-color);
-        "
-      >
-        <div style="display: flex; align-items: center; gap: 10px;">
-          <h2 style="margin: 0;">管理后台</h2>
-          <n-button tertiary size="tiny" @click="collapsed = !collapsed">
-            {{ collapsed ? '展开菜单' : '收起菜单' }}
-          </n-button>
-        </div>
-
-        <n-button text @click="emit('toggle-theme')">
-          <n-icon size="20">
-            <component :is="props.isDarkRef ? Moon:Sun" />
-          </n-icon>
-        </n-button>
-      </n-layout-header>
-
-      <n-layout-content style="padding: 20px;">
-        <RouterView/>
-      </n-layout-content>
-    </n-layout>
+      <n-layout has-sider>
+        <n-layout-sider
+          bordered
+          collapse-mode="width"
+          :collapsed-width="64"
+          :width="240"
+          :collapsed="collapsed"
+          show-trigger
+          @collapse="collapsed = true"
+          @expand="collapsed = false"
+        >
+          <n-menu
+            :collapsed="collapsed"
+            :collapsed-width="64"
+            :collapsed-icon-size="22"
+            :options="menuOptions"
+          />
+        </n-layout-sider>
+        <n-layout>
+          <router-view v-slot="{ Component }">
+              <component :is="Component" />
+          </router-view>
+        </n-layout>
+      </n-layout>
+    </n-layout-content>
   </n-layout>
 </template>
 
 <style scoped>
-h2 {
-  color: var(--n-text-color);
-}
-.full-width-container {
-  width: 100vw; /* 占满视口宽度 */
-  max-width: 100vw;
-  overflow-x: hidden; /* 可选：防止横向滚动条 */
-}
 </style>

@@ -31,9 +31,10 @@ export default {
             },
           }).then(res => {
             if (res.errno === 0) {
-              window.$message.info(`申请证书: ${row.Domain} 成功`);
+              window.$message.success(`申请证书: ${row.Domain} 成功`);
             }
           }).catch(error => {
+            window.$message.error(error)
             console.log(error);
           }).finally(() => {
 
@@ -43,7 +44,7 @@ export default {
       },
         {
         download(row) {
-          request.get("http://127.0.0.1:8080/api/ssl/download", {
+          request.get("http://127.0.0.1:8080/api/ssl/download_url", {
             params: {
               id: row.CertificateId,
             },
@@ -91,6 +92,27 @@ export default {
             );
           }
         },
+        {
+          deployment(row) {
+            request.get("http://43.163.245.139:8080/api/ssl/deployment", {
+              params: {
+                id: row.CertificateId,
+                domain: row.Domain,
+              },
+            }).then(res => {
+              if (res.errno === 0) {
+                window.$message.success("部署成功");
+              } else {
+                window.$message.error(res.err_msg);
+              }
+            }).catch(error => {
+              console.log(error);
+            }).finally(() => {
+
+              }
+            );
+          }
+        },
       ),
       pagination: true
     }
@@ -99,7 +121,7 @@ export default {
     this.fetchData()
   },
   methods: {
-    createColumns({ play },{download},{del}) {
+    createColumns({ play },{download},{del},{deployment}) {
       return [
         {
           title: "ID",
@@ -159,7 +181,7 @@ export default {
         },
         {
           title: "删除证书",
-          key: "download",
+          key: "del",
           render(row) {
             return h(
               NButton,
@@ -170,6 +192,22 @@ export default {
                 onClick: () => del(row)
               },
               { default: () => "删除证书" }
+            );
+          }
+        },
+        {
+          title: "部署证书",
+          key: "deployment",
+          render(row) {
+            return h(
+              NButton,
+              {
+                strong: true,
+                tertiary: true,
+                size: "small",
+                onClick: () => deployment(row)
+              },
+              { default: () => "部署证书" }
             );
           }
         }

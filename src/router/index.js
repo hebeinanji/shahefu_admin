@@ -1,15 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/HomeView.vue'
-import About from '@/views/AboutView.vue'
 import Domain from '@/views/DomainView.vue'
 import Ssl from '@/views/SslsView.vue'
+import Recipe from '@/views/RecipeView.vue'
 import Login from '@/views/LoginView.vue'
 
 const routes = [
   { path: '/', component: Home, meta: { requiresAuth: true }},
-  { path: '/about', component: About,meta: { requiresAuth: true } },
   { path: '/domain', component: Domain,meta: { requiresAuth: true } },
   { path: '/ssl', component: Ssl,meta: { requiresAuth: true } },
+  { path: '/recipe', component: Recipe,meta: { requiresAuth: true } },
   {
     path: '/login',
     component: Login
