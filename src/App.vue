@@ -1,9 +1,11 @@
 <script>
-import { darkTheme, lightTheme, zhCN,dateZhCN } from 'naive-ui'
+import { darkTheme, lightTheme, zhCN, dateZhCN, NIcon } from 'naive-ui'
 import { NConfigProvider } from 'naive-ui'
 import Nav from './components/Nav.vue';
-import { useRouter } from 'vue-router'
+import { useRouter,RouterLink } from 'vue-router'
 import {h} from "vue";
+import { Home16Regular,Certificate24Filled,Book24Regular} from '@vicons/fluent'
+import { DomainFilled } from '@vicons/material'
 export default {
   components: {
     zhCN,
@@ -12,15 +14,78 @@ export default {
     Nav,
   },
   data() {
+   function renderIcon(icon) {
+      return () => h(NIcon, null, { default: () => h(icon) });
+    }
     return {
-      collapsed:true,
+      collapsed:false,
       isDark: localStorage.getItem("isDark") === "true",
       route:useRouter(),
       menuOptions : [
-        { label: '首页', key: '/',href: '/' },
-        { label: '域名列表', key: '/domain',href: '/domain'   },
-        { label: '证书列表', key: '/ssl',href: '/ssl'   },
-        { label: '菜谱列表', key: '/recipe',href: '/recipe'   },
+        {
+          label: () => h(
+            RouterLink,
+            {
+              to: {
+                name: "home",
+                params: {
+                  lang: "zh-CN"
+                }
+              }
+            },
+            { default: () => "数据总揽" }
+          ),
+          key: "go-back-home",
+          icon: renderIcon(Home16Regular)
+        },
+        {
+          label: () => h(
+            RouterLink,
+            {
+              to: {
+                name: "domain",
+                params: {
+                  lang: "zh-CN"
+                }
+              }
+            },
+            { default: () => "域名列表" }
+          ),
+          key: "domain",
+          icon: renderIcon(DomainFilled)
+        },
+        {
+          label: () => h(
+            RouterLink,
+            {
+              to: {
+                name: "ssl",
+                params: {
+                  lang: "zh-CN"
+                }
+              }
+            },
+            { default: () => "证书列表" }
+          ),
+          key: "ssl",
+          icon: renderIcon(Certificate24Filled)
+        },
+        {
+          label: () => h(
+            RouterLink,
+            {
+              to: {
+                name: "recipe",
+                params: {
+                  lang: "zh-CN"
+                }
+              }
+            },
+            { default: () => "菜谱列表" }
+          ),
+          key: "recipe",
+          icon: renderIcon(Book24Regular)
+        },
       ]
     }
   },
@@ -48,16 +113,6 @@ export default {
       localStorage.setItem("isDark", isDark);
       this.isDark = isDark;
     },
-    renderMenuLabel(option) {
-      if ('href' in option) {
-        return h(
-          'a',
-          { href: option.href, target: '_self' },
-          option.label,
-      )
-      }
-      return option.label
-    }
   }
 }
 </script>
@@ -89,11 +144,11 @@ export default {
               @expand="collapsed = false"
             >
               <n-menu
+                responsive
                 :collapsed="collapsed"
                 :collapsed-width="64"
-                :collapsed-icon-size="22"
+                :collapsed-icon-size="30"
                 :options="menuOptions"
-                :render-label="renderMenuLabel"
               />
             </n-layout-sider>
             <n-layout>

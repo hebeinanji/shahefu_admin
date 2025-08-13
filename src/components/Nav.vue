@@ -8,6 +8,7 @@ import { useRouter } from 'vue-router';
 import foolishLogo from '@/assets/foolish-logo.png'
 
 export default defineComponent({
+  methods: { ModeNightOutlined },
   computed: {
     foolishLogo() {
       return foolishLogo
@@ -83,15 +84,15 @@ export default defineComponent({
 });
 </script>
 <template>
-  <div style="background-color: rgb(244,244,244)" >
-    <n-flex justify="space-between" >
+  <div class="bg-amber-100">
+    <n-flex class="mx-6" justify="space-between" >
       <n-space :size="[0,0]">
         <n-image
-          height="80"
+          width="70"
           :src="foolishLogo"
           preview-disabled
         />
-        <n-gradient-text :size="36" type="success">
+        <n-gradient-text class="pt-2" :size="33" type="success">
           沙河福后台管理
         </n-gradient-text>
       </n-space>

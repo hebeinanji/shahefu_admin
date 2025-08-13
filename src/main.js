@@ -1,8 +1,8 @@
-import './assets/main.css'
 import naive from 'naive-ui'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import './style.css'
 
 import App from './App.vue'
 import router from './router'

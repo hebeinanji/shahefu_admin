@@ -7,15 +7,12 @@ import RecipeInfo from '@/views/RecipeInfoView.vue'
 import Login from '@/views/LoginView.vue'
 
 const routes = [
-  { path: '/', component: Home, meta: { requiresAuth: true }},
-  { path: '/domain', component: Domain,meta: { requiresAuth: true } },
-  { path: '/ssl', component: Ssl,meta: { requiresAuth: true } },
-  { path: '/recipe', component: Recipe,meta: { requiresAuth: true } },
-  { path: '/recipe_info', component: RecipeInfo,meta: { requiresAuth: true } },
-  {
-    path: '/login',
-    component: Login
-  }
+  {name: 'home', path: '/', component: Home, meta: { requiresAuth: true }},
+  {name: 'domain', path: '/domain', component: Domain,meta: { requiresAuth: true } },
+  {name: 'ssl', path: '/ssl', component: Ssl,meta: { requiresAuth: true } },
+  {name: 'recipe', path: '/recipe', component: Recipe,meta: { requiresAuth: true } },
+  {name: 'recipe_info', path: '/recipe_info', component: RecipeInfo,meta: { requiresAuth: true } },
+  {name: 'login', path: '/login', component: Login }
 ]
 
 const router = createRouter({

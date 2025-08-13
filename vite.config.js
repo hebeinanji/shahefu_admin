@@ -10,9 +10,26 @@ export default defineConfig({
     vue(),
     vueDevTools(),
   ],
+  css: {
+    postcss: './postcss.config.js'
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
+  },
+  server: {
+    // host: true, // 或者 '0.0.0.0'
+    // port: 5173,
+    proxy: {
+      '/api': {
+        // target: 'https://tool.shahefu.cn',
+        target: 'http://127.0.0.1:8080',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
   },
 })

@@ -1,8 +1,8 @@
 <template>
   <div>
   <n-spin :show="loadShow" class="mt-[0.15rem]">
-  <n-flex justify="end">
-    <n-input-group>
+  <n-flex justify="center">
+    <n-input-group class="py-4 pl-4" >
       <n-input v-model:value="title_q" :style="{ width: '20%' }" />
       <n-button @click="search" type="primary" ghost>
         搜索
@@ -41,7 +41,7 @@ export default {
   data() {
     window.$message = useMessage()
     window.$dialog = useDialog()
-    window.$fetchData = this.fetchData()
+    window.$fetchData = this.fetchData
     window.$loadStart = this.loadStart
     window.$loadEnd = this.loadEnd
     window.$route = useRouter()
@@ -231,14 +231,13 @@ export default {
     },
     fetchData(){
       this.data = [];
-      request.get("http://127.0.0.1:8080/api/recipe/list", {
+      request.get("/api/recipe/list", {
         params: {
           page_num: this.page,
           page_size: this.pageSize,
           title:this.title_q,
         },
       }).then(res => {
-        console.log(res);
         if (res.errno === 0) {
           this.tableData = []
           if (res.data.list!==null){
