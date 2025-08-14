@@ -8,7 +8,7 @@ import { useRouter } from 'vue-router';
 import foolishLogo from '@/assets/foolish-logo.png'
 
 export default defineComponent({
-  methods: { ModeNightOutlined },
+  methods: {},
   computed: {
     foolishLogo() {
       return foolishLogo

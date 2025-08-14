@@ -29,7 +29,6 @@ export default {
               to: {
                 name: "home",
                 params: {
-                  lang: "zh-CN"
                 }
               }
             },
@@ -45,7 +44,6 @@ export default {
               to: {
                 name: "domain",
                 params: {
-                  lang: "zh-CN"
                 }
               }
             },
@@ -61,7 +59,6 @@ export default {
               to: {
                 name: "ssl",
                 params: {
-                  lang: "zh-CN"
                 }
               }
             },
@@ -77,7 +74,6 @@ export default {
               to: {
                 name: "recipe",
                 params: {
-                  lang: "zh-CN"
                 }
               }
             },
@@ -103,12 +99,6 @@ export default {
   mounted() {
   },
   methods: {
-    handleMenuClick(key) {
-      this.route.push(key)
-    },
-    dateZhCN() {
-      return dateZhCN
-    },
     changeTheme(isDark) {
       localStorage.setItem("isDark", isDark);
       this.isDark = isDark;
@@ -166,11 +156,4 @@ export default {
 
 
 <style scoped>
-.full-width-container {
-  margin: 0;
-  margin-top: 0;
-  width: 100vw; /* 占满视口宽度 */
-  max-width: 100vw;
-  overflow-x: hidden; /* 可选：防止横向滚动条 */
-}
 </style>

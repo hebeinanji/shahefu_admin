@@ -46,7 +46,6 @@ export default {
       request.get("/api/stat/info", {
         params: {},
       }).then(res => {
-        console.log(res)
         if (res.errno === 0) {
           this.unhandRecipeNum = res.data.stats.unhandled_recipe
           this.recipeNum = res.data.stats.all_recipe
@@ -108,7 +107,7 @@ export default {
         </n-card>
         <n-card>
           <n-statistic label="证书快要过期数（10天内过期)" tabular-nums>
-            <n-number-animation ref="numberAnimationInstRef" :from="NAN" :to="NAN" />
+            <n-number-animation ref="numberAnimationInstRef" :from="0" :to="0" />
           </n-statistic>
         </n-card>
       </n-space>
