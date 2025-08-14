@@ -6,7 +6,7 @@ import FingerprintJS from '@fingerprintjs/fingerprintjs';
 const { message } = createDiscreteApi(["message"]);
 
 const service = axios.create({
-    timeout: 90000, // 请求超时时间 10s
+    timeout: 1000000, // 请求超时时间 10s
 });
 
 // 请求拦截器

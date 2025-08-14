@@ -29,7 +29,15 @@ export default defineConfig({
         pathRewrite: {
           '^/api': ''
         }
-      }
+      },
+      "/ai_img":{
+        // target: 'https://tool.shahefu.cn',
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/ai_img': ''
+        }
+      },
     }
   },
 })

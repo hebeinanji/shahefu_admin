@@ -5,8 +5,16 @@
       <n-input v-model:value="recipe.cp_name" placeholder="请输入菜谱名字" />
     </n-form-item>
     <n-form-item label="菜谱封面">
-      <n-input v-model:value="recipe.cover" placeholder="请输入封面地址" />
+      <n-input v-model:value="recipe.cover" disabled placeholder="请输入封面地址" />
     </n-form-item>
+    <n-image width="100" :src="recipe.cover">
+      <template #error>
+        <n-icon :size="100">
+          <HideImageOutlined />
+        </n-icon>
+      </template>
+    </n-image>
+
     <n-form-item label="菜谱难度">
       <n-input v-model:value="recipe.cook_level" placeholder="请输入菜谱难度" />
     </n-form-item>
@@ -69,13 +77,18 @@
 
 <script>
 import { useRoute } from 'vue-router'
+import {HideImageOutlined} from '@vicons/material'
 import request from '@/utils/request.js'
 
 export default {
+  components:{
+    HideImageOutlined,
+  },
   data() {
     return {
       route:useRoute(),
       recipe: {},
+      aiImgs:[],
       tagInput: "",
     };
   },
@@ -92,6 +105,7 @@ export default {
         console.log(res);
         if (res.errno === 0) {
           this.recipe = res.data.info
+          this.recipe.cover = "https://cos1-1252031674.cos.ap-beijing.myqcloud.com/"+this.recipe.cover
         }
       }).catch(error => {
         console.log(error);
@@ -100,6 +114,30 @@ export default {
         }
       );
     },
+    generateCoverImg(title,ingredients,process){
+      request.post("/ai_img/generate", {
+        name:title,
+        ingredients:ingredients,
+        process:process
+      },
+        {
+          headers: {
+            'Content-Type': 'application/json' // 或者 application/x-www-form-urlencoded
+          }
+        }
+      ).then(res => {
+        console.log(res);
+        this.aiImgs = res.images_base64s
+      }).catch(error => {
+        console.log(error);
+      }).finally(() => {
+
+        }
+      );
+    },
+
+
+
     addTag() {
       if (this.tagInput.trim() && !this.recipe.tags.includes(this.tagInput.trim())) {
         this.recipe.tags.push(this.tagInput.trim());

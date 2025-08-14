@@ -160,6 +160,19 @@ export default {
           key: "tips",
         },
         {
+          title: "发布状态",
+          key: "publish_status",
+          render(row) {
+            if (row.publish_status === 0) {
+              return "未发布"
+            } else if (row.publish_status === 1) {
+              return "已发布"
+            }else{
+              return "未知"
+            }
+          }
+        },
+        {
           title: "更新时间",
           key: "updated_at"
         },
@@ -185,7 +198,7 @@ export default {
           title: "上下线",
           key: "offline",
           render(row) {
-            if(row.status===0){
+            if(row.publish_status===0){
               return h(
                 NButton,
                 {
@@ -238,6 +251,7 @@ export default {
           title:this.title_q,
         },
       }).then(res => {
+        console.log(res);
         if (res.errno === 0) {
           this.tableData = []
           if (res.data.list!==null){
