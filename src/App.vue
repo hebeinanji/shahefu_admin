@@ -57,21 +57,6 @@ export default {
             RouterLink,
             {
               to: {
-                name: "ssl",
-                params: {
-                }
-              }
-            },
-            { default: () => "证书列表" }
-          ),
-          key: "ssl",
-          icon: renderIcon(Certificate24Filled)
-        },
-        {
-          label: () => h(
-            RouterLink,
-            {
-              to: {
                 name: "recipe",
                 params: {
                 }

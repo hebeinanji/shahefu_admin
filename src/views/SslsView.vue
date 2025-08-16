@@ -11,6 +11,7 @@
 import request from "/src/utils/request";
 import { h } from "vue";
 import { NButton,useMessage } from 'naive-ui'
+import { useRoute } from 'vue-router'
 
 export default {
   components:{
@@ -20,6 +21,7 @@ export default {
     window.$message = useMessage()
     return {
       message: useMessage(),
+      route:useRoute(),
       data:[],
       columns: this.createColumns(
         {
@@ -217,6 +219,7 @@ export default {
       this.data = [];
       request.get("http://127.0.0.1:8080/api/ssl/list", {
         params: {
+          domain_name:this.route.query.host,
         },
       }).then(res => {
         if (res.errno === 0) {

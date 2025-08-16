@@ -1,5 +1,5 @@
 <template>
-  <n-card title="卡片">
+  <n-card>
     <n-table class="w-full h-full" :bordered="false" :single-line="false">
       <thead>
       <tr>
@@ -11,13 +11,39 @@
       <tbody>
       <tr>
         <td>1</td>
-        <td>shahefu.cn</td>
-        <td><RouterLink to="/ssls?host=shahefu.cn">查看</RouterLink></td>
+        <td>file.shahefu.cn</td>
+        <td><RouterLink to="/ssl?host=file.shahefu.cn">
+          <n-button strong secondary type="primary">
+            查看证书
+          </n-button>
+        </RouterLink></td>
       </tr>
       <tr>
         <td>2</td>
-        <td>shahefu.com</td>
-        <td><RouterLink to="/ssls?host=shahefu.com">查看</RouterLink></td>
+        <td>harbor.shahefu.com</td>
+        <td><RouterLink to="/ssl?host=harbor.shahefu.com">
+          <n-button strong secondary type="primary">
+            查看证书
+          </n-button>
+        </RouterLink></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>tool.shahefu.cn</td>
+        <td><RouterLink to="/ssl?host=tool.shahefu.cn">
+          <n-button strong secondary type="primary">
+            查看证书
+          </n-button>
+        </RouterLink></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>mylog.shahefu.cn</td>
+        <td><RouterLink to="/ssl?host=mylog.shahefu.com">
+          <n-button strong secondary type="primary">
+            查看证书
+          </n-button>
+        </RouterLink></td>
       </tr>
       </tbody>
     </n-table>
