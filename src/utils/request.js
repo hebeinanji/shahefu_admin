@@ -18,18 +18,18 @@ service.interceptors.request.use(
             config.headers.Authorization = `Bearer ${token}`;
         }
         // 可添加全局默认参数
-        config.params = {
-            ...config.params,
-            lang: "en-US", // 示例：全局默认语言
-            userAgent: navigator.userAgent || "N/A",
-            platform: navigator.platform || "N/A",
-            language: navigator.language || "N/A",
-            screenWidth: window.screen.width || 0,
-            screenHeight: window.screen.height || 0,
-            devicePixelRatio: window.devicePixelRatio || 1,
-            hardwareConcurrency: navigator.hardwareConcurrency || "N/A",
-            touchSupport: "ontouchstart" in window || navigator.maxTouchPoints > 0,
-        };
+        // config.params = {
+        //     ...config.params,
+        //     lang: "en-US", // 示例：全局默认语言
+        //     userAgent: navigator.userAgent || "N/A",
+        //     platform: navigator.platform || "N/A",
+        //     language: navigator.language || "N/A",
+        //     screenWidth: window.screen.width || 0,
+        //     screenHeight: window.screen.height || 0,
+        //     devicePixelRatio: window.devicePixelRatio || 1,
+        //     hardwareConcurrency: navigator.hardwareConcurrency || "N/A",
+        //     touchSupport: "ontouchstart" in window || navigator.maxTouchPoints > 0,
+        // };
         async function getFingerprintSync() {
             const fp = await FingerprintJS.load();
             const result = await fp.get();

@@ -1,10 +1,19 @@
 <template>
-  <n-data-table
-    :columns="columns"
-    :data="data"
-    :pagination="pagination"
-    :bordered="false"
-  />
+  <n-card>
+    <n-flex justify="end">
+      <n-button type="info"
+      @click="apply"
+      >
+        申请新证书
+      </n-button>
+    </n-flex>
+    <n-data-table
+      :columns="columns"
+      :data="data"
+      :pagination="pagination"
+      :bordered="false"
+    />
+  </n-card>
 </template>
 
 <script>
@@ -25,26 +34,6 @@ export default {
       data:[],
       columns: this.createColumns(
         {
-        play(row) {
-          // This function is called when the "续约" button is clicked
-          request.get("http://127.0.0.1:8080/api/ssl/apply", {
-            params: {
-              domain_name: row.Domain,
-            },
-          }).then(res => {
-            if (res.errno === 0) {
-              window.$message.success(`申请证书: ${row.Domain} 成功`);
-            }
-          }).catch(error => {
-            window.$message.error(error)
-            console.log(error);
-          }).finally(() => {
-
-            }
-          );
-        }
-      },
-        {
         download(row) {
           request.get("http://127.0.0.1:8080/api/ssl/download_url", {
             params: {
@@ -54,8 +43,8 @@ export default {
             if (res.errno === 0) {
               // This function is called when the "下载证书" button is clicked
               const link = document.createElement("a");
-              link.href = res.data.download_url; // Assuming row has a downloadUrl property
-              link.download = res.data.filename; // Set the file name for download
+              link.href = res.data.data.Response.DownloadCertificateUrl; // Assuming row has a downloadUrl property
+              link.download = res.data.data.Response.DownloadFilename; // Set the file name for download
               document.body.appendChild(link);
               link.click();
               document.body.removeChild(link);
@@ -96,7 +85,7 @@ export default {
         },
         {
           deployment(row) {
-            request.get("http://43.163.245.139:8080/api/ssl/deployment", {
+            request.get("/api/ssl/deployment", {
               params: {
                 id: row.CertificateId,
                 domain: row.Domain,
@@ -123,7 +112,7 @@ export default {
     this.fetchData()
   },
   methods: {
-    createColumns({ play },{download},{del},{deployment}) {
+    createColumns({download}, {del}, {deployment}) {
       return [
         {
           title: "ID",
@@ -150,22 +139,6 @@ export default {
           key: "StatusName"
         },
         {
-          title: "申请新证书",
-          key: "re_new",
-          render(row) {
-            return h(
-              NButton,
-              {
-                strong: true,
-                tertiary: true,
-                size: "small",
-                onClick: () => play(row)
-              },
-              { default: () => "申请新证书" }
-            );
-          }
-        },
-        {
           title: "下载证书",
           key: "download",
           render(row) {
@@ -173,7 +146,8 @@ export default {
               NButton,
               {
                 strong: true,
-                tertiary: true,
+                secondary:true,
+                type:"success",
                 size: "small",
                 onClick: () => download(row)
               },
@@ -189,7 +163,8 @@ export default {
               NButton,
               {
                 strong: true,
-                tertiary: true,
+                secondary:true,
+                type:"error",
                 size: "small",
                 onClick: () => del(row)
               },
@@ -205,7 +180,8 @@ export default {
               NButton,
               {
                 strong: true,
-                tertiary: true,
+                secondary:true,
+                type:"warning",
                 size: "small",
                 onClick: () => deployment(row)
               },
@@ -232,6 +208,24 @@ export default {
         }
       );
     },
+    apply() {
+      request.get("http://127.0.0.1:8080/api/ssl/apply", {
+      params: {
+        domain_name:this.route.query.host,
+      },
+      }).then(res => {
+        if (res.errno === 0) {
+        window.$message.success('申请证书: '+this.route.query.host+' 成功');
+        this.fetchData()
+      }
+      }).catch(error => {
+        window.$message.error(error)
+        console.log(error);
+      }).finally(() => {
+        }
+      );
+    }
+
   }
 }
 </script>
