@@ -5,14 +5,18 @@ import Ssl from '@/views/SslsView.vue'
 import Recipe from '@/views/RecipeView.vue'
 import RecipeInfo from '@/views/RecipeInfoView.vue'
 import Login from '@/views/LoginView.vue'
+import FeedbackView from '@/views/FeedbackView.vue'
+import UserAdminView  from '@/views/UserAdminView.vue'
 
 const routes = [
+  {name: 'login', path: '/login', component: Login },
   {name: 'home', path: '/', component: Home, meta: { requiresAuth: true }},
   {name: 'domain', path: '/domain', component: Domain,meta: { requiresAuth: true } },
   {name: 'ssl', path: '/ssl', component: Ssl,meta: { requiresAuth: true } },
   {name: 'recipe', path: '/recipe', component: Recipe,meta: { requiresAuth: true } },
   {name: 'recipe_info', path: '/recipe_info', component: RecipeInfo,meta: { requiresAuth: true } },
-  {name: 'login', path: '/login', component: Login }
+  {name: 'feedback', path: '/feedback', component: FeedbackView,meta: { requiresAuth: true } },
+  {name: 'user_admin', path: '/user_admin', component:UserAdminView,meta: { requiresAuth: true } },
 ]
 
 const router = createRouter({

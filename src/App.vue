@@ -4,10 +4,12 @@ import { NConfigProvider } from 'naive-ui'
 import Nav from './components/Nav.vue';
 import { useRouter,RouterLink } from 'vue-router'
 import {h} from "vue";
-import { Home16Regular,Certificate24Filled,Book24Regular} from '@vicons/fluent'
-import { DomainFilled } from '@vicons/material'
+import { Home16Regular,PersonFeedback24Regular,Book24Regular} from '@vicons/fluent'
+import { DomainFilled,AdminPanelSettingsOutlined } from '@vicons/material'
+import LoginView from '@/views/LoginView.vue'
 export default {
   components: {
+    LoginView,
     zhCN,
     dateZhCN,
     NConfigProvider,
@@ -67,6 +69,36 @@ export default {
           key: "recipe",
           icon: renderIcon(Book24Regular)
         },
+        {
+          label: () => h(
+            RouterLink,
+            {
+              to: {
+                name: "feedback",
+                params: {
+                }
+              }
+            },
+            { default: () => "反馈列表" }
+          ),
+          key: "feedback",
+          icon: renderIcon(PersonFeedback24Regular)
+        },
+        {
+          label: () => h(
+            RouterLink,
+            {
+              to: {
+                name: "user_admin",
+                params: {
+                }
+              }
+            },
+            { default: () => "用户列表" }
+          ),
+          key: "user_admin",
+          icon: renderIcon(AdminPanelSettingsOutlined)
+        }
       ]
     }
   },
@@ -77,6 +109,9 @@ export default {
     theme() {
       return this.isDark ? darkTheme : lightTheme
     },
+    curRoute() {
+      return this.$route
+    }
   },
   created()
   {
@@ -96,7 +131,7 @@ export default {
   <n-config-provider class="m0" :theme="theme" :locale="zhCN">
     <n-message-provider>
       <n-dialog-provider>
-      <n-layout position="absolute">
+      <n-layout v-if="curRoute.name !== 'login'" position="absolute">
         <n-layout-header
           bordered
           style="height: 100px; padding: 0 0; background-color: #fff;"
@@ -134,6 +169,7 @@ export default {
           </n-layout>
         </n-layout-content>
       </n-layout>
+      <LoginView v-else/>
       </n-dialog-provider>
     </n-message-provider>
   </n-config-provider>

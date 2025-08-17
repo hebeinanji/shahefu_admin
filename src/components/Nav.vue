@@ -110,6 +110,7 @@ export default defineComponent({
           <n-icon :component="Sun" />
         </template>
       </n-switch>
+      <router-link to="/login">登录</router-link>
     </n-flex>
   </div>
 
