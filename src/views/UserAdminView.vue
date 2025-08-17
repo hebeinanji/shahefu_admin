@@ -1,14 +1,11 @@
 <template>
-  <div>
+  <n-card>
   <n-spin :show="loadShow" class="mt-[0.15rem]">
-  <n-flex justify="center">
-    <n-input-group class="py-4 pl-4" >
-      <n-input v-model:value="title_q" :style="{ width: '20%' }" />
-      <n-button @click="search" type="primary" ghost>
-        搜索
+    <n-flex justify="end">
+      <n-button type="info">
+        <router-link to="/admin_info?id=0">新增</router-link>
       </n-button>
-    </n-input-group>
-  </n-flex>
+    </n-flex>
   <n-data-table
     remote
     striped
@@ -20,7 +17,7 @@
     @update:page-size="updatePageSize"
   />
   </n-spin>
-  </div>
+  </n-card>
 </template>
 
 <script>
@@ -55,7 +52,7 @@ export default {
       tableData:[],
       columns:this.createColumns({
         editRow(row) {
-          window.$route.push("/recipe_info?id="+row.id)
+          window.$route.push("/admin_info?id="+row.id)
         },
         offlineRow(row) {
           window.$dialog.warning({
@@ -185,7 +182,25 @@ export default {
               );
             }
           }
-        }
+        },
+        {
+          title: "编辑",
+          key: "edit",
+          render(row) {
+            return h(
+              NButton,
+              {
+                secondary: true,
+                type: "primary",
+                strong: true,
+                tertiary: true,
+                size: "small",
+                onClick: () => editRow(row),
+              },
+              { icon: () => h(Edit20Regular,null) },
+            );
+          }
+        },
       ];
     },
     updatePageSize(pageSize){

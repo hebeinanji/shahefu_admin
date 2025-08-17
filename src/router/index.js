@@ -7,6 +7,7 @@ import RecipeInfo from '@/views/RecipeInfoView.vue'
 import Login from '@/views/LoginView.vue'
 import FeedbackView from '@/views/FeedbackView.vue'
 import UserAdminView  from '@/views/UserAdminView.vue'
+import AdminInfoView  from '@/views/AdminInfoView.vue'
 
 const routes = [
   {name: 'login', path: '/login', component: Login },
@@ -17,6 +18,7 @@ const routes = [
   {name: 'recipe_info', path: '/recipe_info', component: RecipeInfo,meta: { requiresAuth: true } },
   {name: 'feedback', path: '/feedback', component: FeedbackView,meta: { requiresAuth: true } },
   {name: 'user_admin', path: '/user_admin', component:UserAdminView,meta: { requiresAuth: true } },
+  {name: 'admin_info', path: '/admin_info', component:AdminInfoView,meta: { requiresAuth: true } },
 ]
 
 const router = createRouter({

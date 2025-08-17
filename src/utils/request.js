@@ -30,15 +30,16 @@ service.interceptors.request.use(
         //     hardwareConcurrency: navigator.hardwareConcurrency || "N/A",
         //     touchSupport: "ontouchstart" in window || navigator.maxTouchPoints > 0,
         // };
-        async function getFingerprintSync() {
-            const fp = await FingerprintJS.load();
-            const result = await fp.get();
-            return result.visitorId; // 返回唯一ID
-        }
-        return getFingerprintSync().then((res) => {
-            config.params.fingerprint = res;
-            return config
-        })
+        // async function getFingerprintSync() {
+        //     const fp = await FingerprintJS.load();
+        //     const result = await fp.get();
+        //     return result.visitorId; // 返回唯一ID
+        // }
+        // return getFingerprintSync().then((res) => {
+        //     config.params.fingerprint = res;
+        //     return config
+        // })
+      return config
     },
     (error) => {
         return Promise.reject(error);
