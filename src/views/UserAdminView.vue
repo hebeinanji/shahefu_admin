@@ -57,7 +57,7 @@ export default {
         offlineRow(row) {
           window.$dialog.warning({
             title: '确认下线',
-            content: '确认下线该菜谱么，下线后反馈列表上不展示该反馈！',
+            content: '确认下线该用户么，下线后该用户无法登录该后台',
             positiveText: '确定',
             negativeText: '取消',
             maskClosable: false,
@@ -85,7 +85,7 @@ export default {
         onlineRow(row) {
           window.$dialog.warning({
             title: '确认上线',
-            content: '确认上线么。上线后用户可看到该反馈',
+            content: '确认上线么。上线后用户可以进到后台编辑',
             positiveText: '确定',
             negativeText: '取消',
             maskClosable: false,

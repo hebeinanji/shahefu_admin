@@ -5,8 +5,8 @@
       <n-form-item label="用户名">
         <n-input v-model:value="admin.username" placeholder="请输入管理员用户名" />
       </n-form-item>
-      <n-form-item label="密钥">
-        <n-input v-model:value="admin.secret" placeholder="请输入用户密钥" />
+      <n-form-item v-if="admin.totp_url.length>0" label="totp码">
+        <n-qr-code :size="230" :value="admin.totp_url" />
       </n-form-item>
       <!-- 保存按钮 -->
       <n-form-item>
@@ -32,7 +32,7 @@ export default {
       admin: {
         id:0,
         username:"",
-        secret:"",
+        totp_url:"",
       },
       message:useMessage(),
     };
