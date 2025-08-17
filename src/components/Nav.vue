@@ -96,21 +96,23 @@ export default defineComponent({
           沙河福后台管理
         </n-gradient-text>
       </n-space>
-      <n-switch  class="pt-8" size="large" @update:value="emitUpdate2Parent" :round="false" v-model:value="darkOpen">
-        <template #checked-icon>
-          <n-icon :component="ModeNightOutlined" />
-        </template>
-        <template #checked>
-          暗夜
-        </template>
-        <template #unchecked>
-          <n-text class="border-black">白昼</n-text>
-        </template>
-        <template #unchecked-icon>
-          <n-icon :component="Sun" />
-        </template>
-      </n-switch>
-      <router-link to="/login">登录</router-link>
+      <n-space>
+        <n-switch  class="pt-8" size="large" @update:value="emitUpdate2Parent" :round="false" v-model:value="darkOpen">
+          <template #checked-icon>
+            <n-icon :component="ModeNightOutlined" />
+          </template>
+          <template #checked>
+            暗夜
+          </template>
+          <template #unchecked>
+            <n-text class="border-black">白昼</n-text>
+          </template>
+          <template #unchecked-icon>
+            <n-icon :component="Sun" />
+          </template>
+        </n-switch>
+        <n-button class="mt-3.5" type="primary"><router-link class="p-0 m-0" to="/login">登录</router-link></n-button>
+      </n-space>
     </n-flex>
   </div>
 
