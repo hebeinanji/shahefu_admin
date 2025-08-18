@@ -169,7 +169,9 @@ export default {
           </n-layout>
         </n-layout-content>
       </n-layout>
-      <LoginView v-else/>
+        <router-view v-else v-slot="{ Component }">
+          <component :is="Component" />
+        </router-view>
       </n-dialog-provider>
     </n-message-provider>
   </n-config-provider>

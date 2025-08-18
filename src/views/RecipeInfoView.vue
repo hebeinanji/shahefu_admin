@@ -161,7 +161,4 @@ export default {
 </script>
 
 <style scoped>
-.n-form-item {
-  width: 100%;
-}
 </style>

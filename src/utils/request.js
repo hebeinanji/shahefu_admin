@@ -2,7 +2,6 @@
 import axios from "axios";
 import { createDiscreteApi } from "naive-ui";
 import router from '../router/index.js';
-import FingerprintJS from '@fingerprintjs/fingerprintjs';
 const { message } = createDiscreteApi(["message"]);
 
 const service = axios.create({
@@ -50,7 +49,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     (response) => {
         // 可在这里统一处理响应数据
-        if (response.data.errno === 403) {
+        if (response.data.errno === 401) {
             message.error("请重新登陆");
             return setTimeout(() => {
                 router.push("/login").catch((err) => {

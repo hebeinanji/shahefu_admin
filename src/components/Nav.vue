@@ -6,12 +6,24 @@ import { Sun } from "@vicons/fa";
 import { NIcon } from "naive-ui";
 import { useRouter } from 'vue-router';
 import foolishLogo from '@/assets/foolish-logo.png'
+import useAuthStore from "/src/utils/auth";
 
 export default defineComponent({
-  methods: {},
+  methods: {
+    logout(){
+      useAuthStore().logout()
+      setTimeout(() => {
+        // 这里可以处理登录成功后的路由跳转
+        this.route.push('/login');
+      }, 1000);
+    },
+  },
   computed: {
     foolishLogo() {
       return foolishLogo
+    },
+    hasLogin(){
+      return useAuthStore().isAuthenticated()
     }
   },
   props: [
@@ -74,6 +86,7 @@ export default defineComponent({
       emitUpdate2Parent,
       darkOpen,
       pathInfos,
+      route:useRouter(),
       ModeNightOutlined,
       Sun,
       MdCash,
@@ -111,7 +124,8 @@ export default defineComponent({
             <n-icon :component="Sun" />
           </template>
         </n-switch>
-        <n-button class="mt-3.5" type="primary"><router-link class="p-0 m-0" to="/login">登录</router-link></n-button>
+        <n-button v-if="!hasLogin" class="mt-3.5" type="primary"><router-link class="p-0 m-0" to="/login">登录</router-link></n-button>
+        <n-button v-else class="mt-3.5" type="primary" @click="logout" >退出</n-button>
       </n-space>
     </n-flex>
   </div>
