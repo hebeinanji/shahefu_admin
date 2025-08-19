@@ -20,7 +20,7 @@ export default {
         return
       }
       this.loading = true; // 开启加载状态
-      axios.post('/api/login', {"username":this.username,"otp_code":this.totp}).then(res=>{
+      axios.post('/admin/login', {"username":this.username,"otp_code":this.totp}).then(res=>{
         if(res.data.errno===0){
           this.message.success("登录成功")
           useAuthStore().login(res.data.data.jwt, res.data.data.username);

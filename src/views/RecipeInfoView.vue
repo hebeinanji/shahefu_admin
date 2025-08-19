@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     fetchData(){
-      request.get("http://127.0.0.1:8080/api/recipe/info", {
+      request.get("http://127.0.0.1:8080/admin/recipe/info", {
         params: {
          id:this.route.query.id,
         },

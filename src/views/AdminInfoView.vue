@@ -45,7 +45,7 @@ export default {
       if(this.route.query.id==="0"){
         return
       }
-      request.get("http://127.0.0.1:8080/api/useradmin/info", {
+      request.get("http://127.0.0.1:8080/admin/useradmin/info", {
         params: {
          id:this.route.query.id,
         },
@@ -64,7 +64,7 @@ export default {
     save() {
       this.admin.id = this.route.query.id
       console.log("保存的用户：", this.admin);
-      request.post("http://127.0.0.1:8080/api/useradmin/edit", this.admin).then(res => {
+      request.post("http://127.0.0.1:8080/admin/useradmin/edit", this.admin).then(res => {
         console.log(res);
         if (res.errno === 0) {
           this.message.success("保存成功")

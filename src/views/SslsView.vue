@@ -35,7 +35,7 @@ export default {
       columns: this.createColumns(
         {
         download(row) {
-          request.get("http://127.0.0.1:8080/api/ssl/download_url", {
+          request.get("http://127.0.0.1:8080/admin/ssl/download_url", {
             params: {
               id: row.CertificateId,
             },
@@ -63,7 +63,7 @@ export default {
               window.$message.success("证书不可删除");
               return;
             }
-            request.get("http://127.0.0.1:8080/api/ssl/del", {
+            request.get("http://127.0.0.1:8080/admin/ssl/del", {
               params: {
                 id: row.CertificateId,
               },
@@ -85,7 +85,7 @@ export default {
         },
         {
           deployment(row) {
-            request.get("/api/ssl/deployment", {
+            request.get("/admin/ssl/deployment", {
               params: {
                 id: row.CertificateId,
                 domain: row.Domain,
@@ -193,7 +193,7 @@ export default {
     },
     fetchData(){
       this.data = [];
-      request.get("http://127.0.0.1:8080/api/ssl/list", {
+      request.get("http://127.0.0.1:8080/admin/ssl/list", {
         params: {
           domain_name:this.route.query.host,
         },
@@ -209,7 +209,7 @@ export default {
       );
     },
     apply() {
-      request.get("http://127.0.0.1:8080/api/ssl/apply", {
+      request.get("http://127.0.0.1:8080/admin/ssl/apply", {
       params: {
         domain_name:this.route.query.host,
       },

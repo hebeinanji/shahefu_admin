@@ -22,12 +22,12 @@ export default defineConfig({
     // host: true, // 或者 '0.0.0.0'
     // port: 5173,
     proxy: {
-      '/api': {
+      '/admin': {
         // target: 'https://tool.shahefu.cn',
         target: 'http://127.0.0.1:8080',
         changeOrigin: true,
         pathRewrite: {
-          '^/api': ''
+          '^/admin': ''
         }
       },
       "/ai_img":{

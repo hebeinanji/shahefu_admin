@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     fetchData(){
-      request.get("/api/stat/info", {
+      request.get("/admin/stat/info", {
         params: {},
       }).then(res => {
         if (res.errno === 0) {

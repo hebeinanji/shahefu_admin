@@ -66,7 +66,7 @@ export default {
             maskClosable: false,
             onPositiveClick: () => {
               window.$loadStart
-              request.post("http://127.0.0.1:8080/api/feedback/offline", {
+              request.post("http://127.0.0.1:8080/admin/feedback/offline", {
                 "id": row.id,
               }).then(res => {
                 if (res.errno === 0) {
@@ -94,7 +94,7 @@ export default {
             maskClosable: false,
             onPositiveClick: () => {
               window.$loadStart()
-              request.post("http://127.0.0.1:8080/api/feedback/online", {
+              request.post("http://127.0.0.1:8080/admin/feedback/online", {
                 "id": row.id,
               }).then(res => {
                 if (res.errno === 0) {
@@ -287,7 +287,7 @@ export default {
     },
     fetchData(){
       this.data = [];
-      request.get("/api/feedback/list", {
+      request.get("/admin/feedback/list", {
         params: {
           page_num: this.page,
           page_size: this.pageSize,

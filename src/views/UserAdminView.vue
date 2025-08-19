@@ -63,7 +63,7 @@ export default {
             maskClosable: false,
             onPositiveClick: () => {
               window.$loadStart
-              request.post("http://127.0.0.1:8080/api/useradmin/offline", {
+              request.post("http://127.0.0.1:8080/admin/useradmin/offline", {
                 "id": row.id,
               }).then(res => {
                 if (res.errno === 0) {
@@ -91,7 +91,7 @@ export default {
             maskClosable: false,
             onPositiveClick: () => {
               window.$loadStart()
-              request.post("http://127.0.0.1:8080/api/useradmin/online", {
+              request.post("http://127.0.0.1:8080/admin/useradmin/online", {
                 "id": row.id,
               }).then(res => {
                 if (res.errno === 0) {
@@ -216,7 +216,7 @@ export default {
     },
     fetchData(){
       this.data = [];
-      request.get("/api/useradmin/list", {
+      request.get("/admin/useradmin/list", {
         params: {
           page_num: this.page,
           page_size: this.pageSize,

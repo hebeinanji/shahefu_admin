@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     fetchData(){
-      request.get("http://127.0.0.1:8080/api/feedback/info", {
+      request.get("http://127.0.0.1:8080/admin/feedback/info", {
         params: {
          id:this.route.query.id,
         },

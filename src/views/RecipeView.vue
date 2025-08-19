@@ -66,7 +66,7 @@ export default {
             maskClosable: false,
             onPositiveClick: () => {
               window.$loadStart
-              request.post("http://127.0.0.1:8080/api/recipe/offline", {
+              request.post("http://127.0.0.1:8080/admin/recipe/offline", {
                 "id": row.id,
               }).then(res => {
                 if (res.errno === 0) {
@@ -94,7 +94,7 @@ export default {
             maskClosable: false,
             onPositiveClick: () => {
               window.$loadStart()
-              request.post("http://127.0.0.1:8080/api/recipe/online", {
+              request.post("http://127.0.0.1:8080/admin/recipe/online", {
                 "id": row.id,
               }).then(res => {
                 if (res.errno === 0) {
@@ -244,7 +244,7 @@ export default {
     },
     fetchData(){
       this.data = [];
-      request.get("/api/recipe/list", {
+      request.get("/admin/recipe/list", {
         params: {
           page_num: this.page,
           page_size: this.pageSize,
