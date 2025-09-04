@@ -80,7 +80,7 @@ steps:
         - gzip -dc admin_front.tar.gz | docker load
         - echo "✅ 镜像加载完成"
         - rm -rf admin_front.tar.gz admin_front.tar
-        - cd /data/app/adminFront
+        - cd /data/app/SslAdmin
         - docker-compose stop admin_front
         - docker-compose rm -f admin_front
         - docker-compose up -d admin_front
