@@ -5,7 +5,7 @@ import Nav from './components/Nav.vue';
 import { useRouter,RouterLink } from 'vue-router'
 import {h} from "vue";
 import { Home16Regular,PersonFeedback24Regular,Book24Regular} from '@vicons/fluent'
-import { DomainFilled,AdminPanelSettingsOutlined } from '@vicons/material'
+import { DomainFilled,AdminPanelSettingsOutlined,SupervisedUserCircleSharp} from '@vicons/material'
 import LoginView from '@/views/LoginView.vue'
 export default {
   components: {
@@ -94,10 +94,40 @@ export default {
                 }
               }
             },
-            { default: () => "用户列表" }
+            { default: () => "管理员列表" }
           ),
           key: "user_admin",
           icon: renderIcon(AdminPanelSettingsOutlined)
+        },
+        {
+          label: () => h(
+            RouterLink,
+            {
+              to: {
+                name: "user",
+                params: {
+                }
+              }
+            },
+            { default: () => "用户列表" }
+          ),
+          key: "user",
+          icon: renderIcon(SupervisedUserCircleSharp)
+        },
+        {
+          label: () => h(
+            RouterLink,
+            {
+              to: {
+                name: "nav_site",
+                params: {
+                }
+              }
+            },
+            { default: () => "站内导航" }
+          ),
+          key: "nav_site",
+          icon: renderIcon(SupervisedUserCircleSharp)
         }
       ]
     }

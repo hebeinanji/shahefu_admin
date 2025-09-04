@@ -9,6 +9,8 @@ import LoginView from "@/views/LoginView.vue"
 import FeedbackView from '@/views/FeedbackView.vue'
 import UserAdminView  from '@/views/UserAdminView.vue'
 import AdminInfoView  from '@/views/AdminInfoView.vue'
+import UserView from '@/views/UserView.vue'
+import NavSiteView from '@/views/NavSiteView.vue'
 
 const routes = [
   {name: 'home', path: '/', component: Home, meta: { requiresAuth: true }},
@@ -20,6 +22,8 @@ const routes = [
   {name: 'feedback', path: '/feedback', component: FeedbackView,meta: { requiresAuth: true } },
   {name: 'user_admin', path: '/user_admin', component:UserAdminView,meta: { requiresAuth: true } },
   {name: 'admin_info', path: '/admin_info', component:AdminInfoView,meta: { requiresAuth: true } },
+  {name: 'user', path: '/user', component:UserView,meta: { requiresAuth: true } },
+  {name: 'nav_site', path: '/nav_site', component:NavSiteView,meta: { requiresAuth: true } },
 ]
 
 const router = createRouter({
