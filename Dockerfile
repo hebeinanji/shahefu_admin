@@ -34,7 +34,7 @@ WORKDIR /data/app/admin_front
 RUN apt update && apt install -y \
     certbot \
     python3-certbot-nginx \
-    && mkdir -p /data/logs/nginx/shahefu.cn \
+    && mkdir -p /data/logs/nginx/admin.shahefu.com \
     && rm -rf /var/lib/apt/lists/*
 ###
 ###
