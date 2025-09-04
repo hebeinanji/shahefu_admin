@@ -5,6 +5,7 @@ import Nav from './components/Nav.vue';
 import { useRouter,RouterLink } from 'vue-router'
 import {h} from "vue";
 import { Home16Regular,PersonFeedback24Regular,Book24Regular} from '@vicons/fluent'
+import { IosNavigate} from '@vicons/ionicons4'
 import { DomainFilled,AdminPanelSettingsOutlined,SupervisedUserCircleSharp} from '@vicons/material'
 import LoginView from '@/views/LoginView.vue'
 export default {
@@ -127,7 +128,7 @@ export default {
             { default: () => "站内导航" }
           ),
           key: "nav_site",
-          icon: renderIcon(SupervisedUserCircleSharp)
+          icon: renderIcon(IosNavigate)
         }
       ]
     }
