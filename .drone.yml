@@ -1,0 +1,93 @@
+kind: pipeline
+type: docker
+name: build-and-push
+
+steps:
+  - name: docker-build
+    image: plugins/docker
+    settings:
+      registry: harbor.shahefu.com  # Docker 镜像仓库
+      repo: harbor.shahefu.com/shahefu/admin_front
+      tags:
+        - latest
+        - ${DRONE_COMMIT_BRANCH}
+        - ${DRONE_BUILD_NUMBER}
+      dockerfile: Dockerfile  # 指定 Dockerfile
+      context: .  # 指定构建上下文（默认是当前目录）
+      username:
+        from_secret: username
+      password:
+        from_secret: secret
+
+  - name: upload-image-tencent-cos
+    timeout: 30
+    image: appleboy/drone-ssh
+    pull: if-not-exists # always never
+    settings:
+      host: 43.163.245.139 #东京机房
+      username: root
+      port: 22
+      password:
+        from_secret: tencent_ssh_password
+      script:
+        - cd /data/coscli || true
+        - echo "$HARBOR_PASSWORD" | docker login harbor.shahefu.com -u "$HARBOR_USERNAME" --password-stdin || true
+        - docker pull harbor.shahefu.com/shahefu/admin_front:latest || true
+        - docker save -o admin_front.tar harbor.shahefu.com/shahefu/admin_front:latest || true
+        - gzip -c admin_front.tar > admin_front.tar.gz || true
+        - coscli -c coscli_conf.yaml cp admin_front.tar.gz cos://images-tokyo-1/drone-images/admin_front-${DRONE_BUILD_NUMBER}.tar.gz || true
+        - rm -rf admin_front.tar.gz || true
+        - docker image rm harbor.shahefu.com/shahefu/admin_front:latest || true
+      environment:
+        TENCENT_SECRET_ID:
+          from_secret: tencent_secret_id
+        TENCENT_SECRET_KEY:
+          from_secret: tencent_secret_key
+        HARBOR_USERNAME:
+          from_secret: username
+        HARBOR_PASSWORD:
+          from_secret: secret
+
+trigger:
+  branch:
+    - main
+  event:
+    - custom
+---
+
+kind: pipeline
+type: docker
+name: deploy-production
+
+clone:
+  disable: true  # 禁用克隆代码，提高部署速度
+
+steps:
+  - name: deploy-to-server
+    image: appleboy/drone-ssh
+    pull: if-not-exists # always never
+    settings:
+      host:
+        - 43.163.245.139 #腾讯云东京
+      username: root
+      port: 22
+      password:
+        from_secret: tencent_ssh_password
+      script:
+        - cd /data/coscli || true
+        - coscli -c coscli_conf.yaml cp cos://images-tokyo-1/drone-images/admin_front-${DRONE_BUILD_PARENT}.tar.gz admin_front.tar.gz
+        - echo "🔧 解压 $TAR_FILE 并加载 Docker 镜像..."
+        - gzip -dc admin_front.tar.gz | docker load
+        - echo "✅ 镜像加载完成"
+        - rm -rf admin_front.tar.gz admin_front.tar
+        - cd /data/app/adminFront
+        - docker-compose stop admin_front
+        - docker-compose rm -f admin_front
+        - docker-compose up -d admin_front
+        - docker image prune -f
+
+trigger:
+  event:
+    - promote
+  target:
+    - production

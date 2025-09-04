@@ -66,7 +66,7 @@ export default {
             maskClosable: false,
             onPositiveClick: () => {
               window.$loadStart
-              request.post("http://127.0.0.1:8080/admin/feedback/offline", {
+              request.post("/admin/feedback/offline", {
                 "id": row.id,
               }).then(res => {
                 if (res.errno === 0) {
@@ -94,7 +94,7 @@ export default {
             maskClosable: false,
             onPositiveClick: () => {
               window.$loadStart()
-              request.post("http://127.0.0.1:8080/admin/feedback/online", {
+              request.post("/admin/feedback/online", {
                 "id": row.id,
               }).then(res => {
                 if (res.errno === 0) {
