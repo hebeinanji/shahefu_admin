@@ -106,6 +106,22 @@
             </n-button>
           </n-space>
         </n-card>
+        <n-card title="服务器">
+          <n-space>
+            <n-button type="info">
+              <a href="https://console.cloud.tencent.com/" target="_blank">腾讯服务器</a>
+            </n-button>
+            <n-button type="info">
+              <a href="https://console.volcengine.com/ecs/region:ecs+cn-beijing/instance?" target="_blank">火山引擎服务器</a>
+            </n-button>
+            <n-button type="info">
+              <a href="https://ecs.console.aliyun.com/server/i-2zeeyclzglmyidu9ofkw/detail?spm=5176.12818093_47.0.0.3be92cc9FOpz6V&regionId=cn-beijing" target="_blank">阿里云服务器</a>
+            </n-button>
+            <n-button type="info">
+              <a href="https://qiye.aliyun.com/admin/#/home" target="_blank">阿里云企业邮箱管理后台</a>
+            </n-button>
+          </n-space>
+        </n-card>
       </n-space>
     </n-flex>
   </div>
