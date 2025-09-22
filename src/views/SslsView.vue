@@ -31,15 +31,18 @@ export default {
     return {
       message: useMessage(),
       route:useRoute(),
-      data:[],
+      data:[
+      ],
       columns: this.createColumns(
         {
         download(row) {
+          window.$show = true
           request.get("/admin/ssl/download_url", {
             params: {
               id: row.CertificateId,
             },
           }).then(res => {
+            window.$show = false
             if (res.errno === 0) {
               // This function is called when the "下载证书" button is clicked
               const link = document.createElement("a");
@@ -58,20 +61,53 @@ export default {
         }
       },
         {
+          revoke(row){
+            if (row.Status !==1) {
+              window.$message.success("证书不可吊销");
+              return;
+            }
+            window.$show = true
+            request.get("/admin/ssl/revoke", {
+              params: {
+                cert_id: row.CertificateId,
+                domain_name: row.Domain,
+              },
+            }).then(res => {
+              window.$show = false
+              if (res.errno === 0) {
+                window.$message.success("吊销中");
+                setTimeout(() => {
+                  window.location.reload();
+                }, 2000)
+              } else {
+                window.$message.error(res.err_msg);
+              }
+            }).catch(error => {
+              console.log(error);
+            }).finally(() => {
+
+              }
+            );
+          },
+        },
+        {
           del(row) {
             if (row.Status !== 3 && row.Status !== 10 && row.Status !==7) {
               window.$message.success("证书不可删除");
               return;
             }
+            window.$show = true
             request.get("/admin/ssl/del", {
               params: {
                 id: row.CertificateId,
               },
             }).then(res => {
+              window.$show = false
               if (res.errno === 0) {
                 window.$message.success("删除成功");
-                this.fetchData();// Refresh the data after deletion
-                window.$message.success("刷新了");
+                setTimeout(() => {
+                  window.location.reload();
+                }, 2000)
               } else {
                 window.$message.error(res.err_msg);
               }
@@ -85,12 +121,14 @@ export default {
         },
         {
           deployment(row) {
+            window.$show = true
             request.get("/admin/ssl/deployment", {
               params: {
                 id: row.CertificateId,
                 domain: row.Domain,
               },
             }).then(res => {
+              window.$show = false
               if (res.errno === 0) {
                 window.$message.success("部署成功");
               } else {
@@ -112,7 +150,7 @@ export default {
     this.fetchData()
   },
   methods: {
-    createColumns({download}, {del}, {deployment}) {
+    createColumns({download},{revoke},{del}, {deployment}) {
       return [
         {
           title: "ID",
@@ -139,6 +177,10 @@ export default {
           key: "StatusName"
         },
         {
+          title: "是否已被替换",
+          key: "IsReplaced"
+        },
+        {
           title: "下载证书",
           key: "download",
           render(row) {
@@ -152,6 +194,23 @@ export default {
                 onClick: () => download(row)
               },
               { default: () => "下载证书" }
+            );
+          }
+        },
+        {
+          title: "吊销证书",
+          key: "revoke",
+          render(row) {
+            return h(
+              NButton,
+              {
+                strong: true,
+                secondary:true,
+                type:"warning",
+                size: "small",
+                onClick: () => revoke(row)
+              },
+              { default: () => "吊销证书" }
             );
           }
         },
