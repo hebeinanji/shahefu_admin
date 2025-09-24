@@ -47,12 +47,10 @@ export default {
         params: {},
       }).then(res => {
         if (res.errno === 0) {
-          this.unhandRecipeNum = res.data.stats.unhandled_recipe
           this.recipeNum = res.data.stats.all_recipe
           this.allFeedbackNum = res.data.stats.all_feedback
           this.unhandFeedbackNum = res.data.stats.unhandled_feedback
           this.unhandRecipeNum = res.data.stats.unhandled_recipe
-          this.unhandRecipeNum = res.data.stats.all_recipe
           this.allUserNum = res.data.stats.all_user
           this.allVisitorNum = res.data.stats.all_visitor
           this.series = res.data.stats.user_stats
