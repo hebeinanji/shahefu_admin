@@ -51,6 +51,7 @@ export default {
         </n-form-item>
         <n-form-item path="totp" label="密码">
           <n-input
+            @keyup.enter="handleLogin"
             v-model:value="totp"
             placeholder="请输入密码"
           />

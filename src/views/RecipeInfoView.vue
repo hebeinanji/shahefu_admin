@@ -6,7 +6,7 @@
         <n-input v-model:value="recipe.cp_name" placeholder="请输入菜谱名字" />
       </n-form-item>
       <n-form-item label="菜谱封面">
-        <n-input v-model:value="recipe.cover" disabled placeholder="请输入封面地址" />
+        <n-input v-model:value="recipe.cover" disabled/>
       </n-form-item>
       <n-image width="100" :src="recipe.cover">
         <template #error>
@@ -15,11 +15,22 @@
           </n-icon>
         </template>
       </n-image>
+      <n-upload
+        :max="1"
+        list-type="image"
+        :custom-request="customRequest"
+        :previewed-img-props="{ style: { border: '8px solid white' } }"
+      >
+      <n-button>替换封面</n-button>
+      </n-upload>
       <n-form-item label="菜谱难度">
-        <n-input v-model:value="recipe.cook_level" placeholder="请输入菜谱难度" />
+        <n-select v-model:value="recipe.cook_level" :options="options" />
       </n-form-item>
       <n-form-item label="烹饪时长">
-        <n-input v-model:value="recipe.cook_time" placeholder="请输入烹饪时长" />
+        <n-select v-model:value="recipe.cook_time" :options="time_options" />
+      </n-form-item>
+      <n-form-item label="配料">
+        <n-input type="textarea" v-model:value="recipe.origin" disabled/>
       </n-form-item>
 
       <!-- 标签编辑 -->
@@ -48,12 +59,12 @@
       <n-form-item label="做菜步骤">
         <n-space vertical>
           <div
-            v-for="(step, index) in recipe.steps"
+            v-for="(step, index) in recipe.step"
             :key="index"
-            style="display: flex; align-items: center; gap: 8px;"
+            class="w-96 flex items-center justify-center"
           >
             <n-input
-              v-model="recipe.steps[index]"
+              v-model:value="recipe.step[index]"
               type="textarea"
               placeholder="输入步骤内容"
               autosize
@@ -78,6 +89,7 @@
 
 <script>
 import { useRoute } from 'vue-router'
+import {useMessage} from "naive-ui";
 import {HideImageOutlined} from '@vicons/material'
 import request from '@/utils/request.js'
 
@@ -88,15 +100,93 @@ export default {
   data() {
     return {
       route:useRoute(),
+      message:useMessage(),
       recipe: {},
       aiImgs:[],
       tagInput: "",
+      options:[
+        {
+          label: "简单",
+          value: 0,
+        },
+        {
+          label: "中等",
+          value: 1
+        },
+        {
+          label: "复杂",
+          value: 2
+        },
+      ],
+      time_options:[
+        {
+          label: "10分钟左右",
+          value: 0,
+        },
+        {
+          label: "15分钟左右",
+          value: 1
+        },
+        {
+          label: "30分钟左右",
+          value: 2
+        },
+        {
+          label: "45分钟左右",
+          value: 3
+        },
+        {
+          label: "60分钟左右",
+          value: 4
+        },
+        {
+          label: "80分钟左右",
+          value: 5
+        },
+        {
+          label: "90分钟左右",
+          value: 6
+        },
+        {
+          label: "100分钟左右",
+          value: 7
+        },
+        {
+          label: "120分钟左右",
+          value: 8
+        },
+        {
+          label: "150分钟左右",
+          value: 9
+        },{
+          label: "180分钟左右",
+          value: 10
+        },
+        {
+          label: "240分钟左右",
+          value: 11
+        },
+
+      ],
     };
   },
   mounted() {
   this.fetchData()
   },
   methods: {
+    customRequest({file}){
+      const formData = new FormData();
+      formData.append("file", file.file);
+      formData.append("recipe_id", this.recipe.id);
+      request.post("/admin/recipe/modify_cover", formData).then((res) => {
+        console.log(res.data.url)
+        if (res.errno === 0) {
+          this.recipe.cover = "https://cos1-1252031674.cos.ap-beijing.myqcloud.com/"+res.data.url
+        }
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
     fetchData(){
       request.get("/admin/recipe/info", {
         params: {
@@ -147,14 +237,27 @@ export default {
       this.recipe.tags.splice(index, 1);
     },
     addStep() {
-      this.recipe.steps.push("");
+      this.recipe.step.push("");
     },
     removeStep(index) {
-      this.recipe.steps.splice(index, 1);
+      this.recipe.step.splice(index, 1);
     },
     saveRecipe() {
       console.log("保存的菜谱：", this.recipe);
-      this.$message.success("菜谱已保存（控制台查看数据）");
+      request.post("/admin/recipe/edit",this.recipe).then(res => {
+        console.log(res);
+        if (res.errno === 0) {
+          this.message.success("菜谱已保存（控制台查看数据）");
+        }else{
+          this.message.error("菜谱保存失败");
+        }
+      }).catch(error => {
+        console.log(error);
+      }).finally(() => {
+
+        }
+      );
+
     },
   },
 };
