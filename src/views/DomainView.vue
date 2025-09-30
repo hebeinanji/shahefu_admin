@@ -20,6 +20,15 @@
       </tr>
       <tr>
         <td>2</td>
+        <td>file.shahefu.com</td>
+        <td><RouterLink to="/ssl?host=file.shahefu.com">
+          <n-button strong secondary type="primary">
+            查看证书
+          </n-button>
+        </RouterLink></td>
+      </tr>
+      <tr>
+        <td>3</td>
         <td>harbor.shahefu.com</td>
         <td><RouterLink to="/ssl?host=harbor.shahefu.com">
           <n-button strong secondary type="primary">
@@ -28,7 +37,7 @@
         </RouterLink></td>
       </tr>
       <tr>
-        <td>3</td>
+        <td>4</td>
         <td>tool.shahefu.cn</td>
         <td><RouterLink to="/ssl?host=tool.shahefu.cn">
           <n-button strong secondary type="primary">
@@ -37,7 +46,7 @@
         </RouterLink></td>
       </tr>
       <tr>
-        <td>4</td>
+        <td>5</td>
         <td>mylog.shahefu.cn</td>
         <td><RouterLink to="/ssl?host=mylog.shahefu.com">
           <n-button strong secondary type="primary">
@@ -46,9 +55,18 @@
         </RouterLink></td>
       </tr>
       <tr>
-        <td>5</td>
+        <td>6</td>
         <td>admin.shahefu.cn</td>
         <td><RouterLink to="/ssl?host=admin.shahefu.com">
+          <n-button strong secondary type="primary">
+            查看证书
+          </n-button>
+        </RouterLink></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>cook.shahefu.cn</td>
+        <td><RouterLink to="/ssl?host=cook.shahefu.cn">
           <n-button strong secondary type="primary">
             查看证书
           </n-button>
