@@ -18,7 +18,7 @@
       <n-upload
         :max="1"
         list-type="image"
-        :custom-request="customRequest"
+        :custom-request="changeCover"
         :previewed-img-props="{ style: { border: '8px solid white' } }"
       >
       <n-button>替换封面</n-button>
@@ -61,20 +61,31 @@
           <div
             v-for="(step, index) in recipe.step"
             :key="index"
-            class="w-96 flex items-center justify-center"
+            class="w-96 flex items-center"
           >
-            <n-input
-              v-model:value="recipe.step[index]"
-              type="textarea"
-              placeholder="输入步骤内容"
-              autosize
-            />
-            <n-button type="error" secondary size="small" @click="removeStep(index)">
-              删除
-            </n-button>
+            <n-flex justify="start">
+              <n-input
+                v-model:value="recipe.step[index].text"
+                type="textarea"
+                placeholder="输入步骤内容"
+                autosize
+              />
+              <audio
+                v-if="recipe.step[index].mp3.length>0"
+                controls
+                :src="cosBaseUri+recipe.step[index].mp3"
+                style="width: 100%; margin-top: 10px;"
+              ></audio>
+              <n-button type="error" secondary size="small" @click="removeStep(index)">
+                删除
+              </n-button>
+            </n-flex>
           </div>
           <n-button type="primary" ghost @click="addStep">
             添加步骤
+          </n-button>
+          <n-button type="primary" ghost @click="changeStep">
+            更新步骤
           </n-button>
         </n-space>
       </n-form-item>
@@ -99,6 +110,7 @@ export default {
   },
   data() {
     return {
+      cosBaseUri:"https://cos1-1252031674.cos.ap-beijing.myqcloud.com/",
       route:useRoute(),
       message:useMessage(),
       recipe: {},
@@ -174,14 +186,14 @@ export default {
   this.fetchData()
   },
   methods: {
-    customRequest({file}){
+    changeCover({file}){
       const formData = new FormData();
       formData.append("file", file.file);
       formData.append("recipe_id", this.recipe.id);
       request.post("/admin/recipe/modify_cover", formData).then((res) => {
         console.log(res.data.url)
         if (res.errno === 0) {
-          this.recipe.cover = "https://cos1-1252031674.cos.ap-beijing.myqcloud.com/"+res.data.url
+          this.recipe.cover = this.cosBaseUri+res.data.url
         }
       }).catch((error) => {
         console.log(error)
@@ -196,8 +208,24 @@ export default {
         console.log(res);
         if (res.errno === 0) {
           this.recipe = res.data.info
-          this.recipe.cover = "https://cos1-1252031674.cos.ap-beijing.myqcloud.com/"+this.recipe.cover
+          this.recipe.cover = this.cosBaseUri+this.recipe.cover
         }
+      }).catch(error => {
+        console.log(error);
+      }).finally(() => {
+
+        }
+      );
+    },
+    changeStep(){
+      request.post("/admin/recipe/modify_step", {
+        id:this.recipe.id,
+        step:this.recipe.step,
+      }).then(res => {
+        console.log(res);
+        if (res.errno === 0) {
+          this.recipe.step = res.data.info
+          }
       }).catch(error => {
         console.log(error);
       }).finally(() => {
