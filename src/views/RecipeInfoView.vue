@@ -30,7 +30,10 @@
         <n-select v-model:value="recipe.cook_time" :options="time_options" />
       </n-form-item>
       <n-form-item label="配料">
-        <n-input type="textarea" v-model:value="recipe.origin" disabled/>
+        <n-input type="textarea" v-model:value="recipe.accessory"/>
+      </n-form-item>
+      <n-form-item label="配菜">
+        <n-input type="textarea" v-model:value="recipe.origin"/>
       </n-form-item>
 
       <!-- 标签编辑 -->
