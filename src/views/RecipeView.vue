@@ -3,10 +3,15 @@
   <n-spin :show="loadShow" class="mt-[0.15rem]">
   <n-flex justify="center">
     <n-input-group class="py-4 pl-4" >
+      <n-select class="pl-4" on-update="fetchData" v-model:value="type" :options="options" :style="{ width: '10%' }" />
+      <n-select class="pl-4" on-update="fetchData" v-model:value="online" :options="optionsOnline" :style="{ width: '10%' }"/>
       <n-input v-model:value="title_q" :style="{ width: '20%' }" />
       <n-button @click="search" type="primary" ghost>
         搜索
       </n-button>
+    </n-input-group>
+    <n-input-group class="py-4 pl-4" >
+
     </n-input-group>
   </n-flex>
   <n-data-table
@@ -116,9 +121,26 @@ export default {
       }),
       page:1,
       pageSize:10,
+      type:0,
+      online:0,
+      options:[],
+      optionsOnline:[
+        {
+          "label":"未选择",
+          "value":0,
+        },
+        {
+        "label":"已上线",
+        "value":1,
+      },{
+        "label":"未上线",
+        "value":2,
+      },
+      ],
     }
   },
   mounted() {
+    this.classesList()
     this.fetchData()
   },
   computed:{
@@ -246,6 +268,8 @@ export default {
       this.data = [];
       request.get("/admin/recipe/list", {
         params: {
+          type:this.type,
+          online:this.online,
           page_num: this.page,
           page_size: this.pageSize,
           title:this.title_q,
@@ -260,6 +284,19 @@ export default {
           this.page = res.data.pagination.page
           this.pageSize = res.data.pagination.page_size
           this.pageCount = res.data.pagination.total_page
+        }
+      }).catch(error => {
+        console.log(error);
+      }).finally(() => {
+
+        }
+      );
+    },
+    classesList(){
+      request.get("/admin/recipe/classes", {}).then(res => {
+        console.log(res);
+        if (res.errno === 0) {
+          this.options = res.data.list
         }
       }).catch(error => {
         console.log(error);

@@ -268,7 +268,7 @@ export default {
       this.recipe.tags.splice(index, 1);
     },
     addStep() {
-      this.recipe.step.push("");
+      this.recipe.step.push({"text":"","mp3":""});
     },
     removeStep(index) {
       this.recipe.step.splice(index, 1);
