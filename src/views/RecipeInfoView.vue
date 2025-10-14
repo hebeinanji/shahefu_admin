@@ -94,16 +94,21 @@
       </n-form-item>
 
       <!-- 保存按钮 -->
-      <n-form-item>
-        <n-button type="success" @click="saveRecipe">保存菜谱</n-button>
-      </n-form-item>
+      <n-flex>
+        <n-form-item>
+          <n-button type="success" @click="saveRecipe">保存菜谱</n-button>
+        </n-form-item>
+        <n-form-item>
+          <n-button type="warning" @click="online">发布菜谱</n-button>
+        </n-form-item>
+      </n-flex>
     </n-space>
   </n-card>
 </template>
 
 <script>
 import { useRoute } from 'vue-router'
-import {useMessage} from "naive-ui";
+import { useMessage,useDialog } from 'naive-ui'
 import {HideImageOutlined} from '@vicons/material'
 import request from '@/utils/request.js'
 
@@ -183,6 +188,7 @@ export default {
         },
 
       ],
+      dialog:useDialog(),
     };
   },
   mounted() {
@@ -289,6 +295,29 @@ export default {
         }
       );
 
+    },
+    online() {
+      this.dialog.warning({
+        title: '确认上线',
+        content: '确认上线么。上线后用户可看到该菜谱',
+        positiveText: '确定',
+        negativeText: '取消',
+        maskClosable: false,
+        onPositiveClick: () => {
+          request.post("/admin/recipe/online", {
+            "id": this.recipe.id,
+          }).then(res => {
+            if (res.errno === 0) {
+              this.message.success("上线成功")
+            }else{
+              this.message.error(res.err_msg)
+            }
+          }).catch(error => {
+            console.log(error);
+          }).finally(
+          );
+        },
+      })
     },
   },
 };

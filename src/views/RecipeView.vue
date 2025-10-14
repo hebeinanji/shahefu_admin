@@ -3,9 +3,9 @@
   <n-spin :show="loadShow" class="mt-[0.15rem]">
   <n-flex justify="center">
     <n-input-group class="py-4 pl-4" >
-      <n-select class="pl-4" on-update="fetchData" v-model:value="type" :options="options" :style="{ width: '10%' }" />
-      <n-select class="pl-4" on-update="fetchData" v-model:value="online" :options="optionsOnline" :style="{ width: '10%' }"/>
-      <n-input v-model:value="title_q" :style="{ width: '20%' }" />
+      <n-text class="pt-2">分类：</n-text><n-select class="pr-4" filterable v-model:value="type" :options="options" :style="{ width: '10%' }" />
+      <n-text class="pt-2">是否在线：</n-text><n-select class="pr-4" filterable v-model:value="online" :options="optionsOnline" :style="{ width: '10%' }"/>
+      <n-text class="pt-2">菜谱名：</n-text><n-input v-model:value="title_q" :style="{ width: '20%' }" />
       <n-button @click="search" type="primary" ghost>
         搜索
       </n-button>
