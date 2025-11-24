@@ -4,7 +4,7 @@ import { NConfigProvider } from 'naive-ui'
 import Nav from './components/Nav.vue';
 import { useRouter,RouterLink } from 'vue-router'
 import {h} from "vue";
-import { Home16Regular,PersonFeedback24Regular,Book24Regular} from '@vicons/fluent'
+import { Home16Regular,PersonFeedback24Regular,Book24Regular,Beach20Filled} from '@vicons/fluent'
 import { IosNavigate} from '@vicons/ionicons4'
 import { DomainFilled,AdminPanelSettingsOutlined,SupervisedUserCircleSharp} from '@vicons/material'
 import LoginView from '@/views/LoginView.vue'
@@ -54,6 +54,21 @@ export default {
           ),
           key: "domain",
           icon: renderIcon(DomainFilled)
+        },
+        {
+          label: () => h(
+            RouterLink,
+            {
+              to: {
+                name: "holiday",
+                params: {
+                }
+              }
+            },
+            { default: () => "节假日列表" }
+          ),
+          key: "holiday",
+          icon: renderIcon(Beach20Filled)
         },
         {
           label: () => h(

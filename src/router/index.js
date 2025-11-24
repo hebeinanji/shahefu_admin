@@ -11,6 +11,8 @@ import UserAdminView  from '@/views/UserAdminView.vue'
 import AdminInfoView  from '@/views/AdminInfoView.vue'
 import UserView from '@/views/UserView.vue'
 import NavSiteView from '@/views/NavSiteView.vue'
+import HolidayView from '@/views/HolidayView.vue'
+import HolidayInfoView from '@/views/HolidayInfoView.vue'
 
 const routes = [
   {name: 'home', path: '/', component: Home, meta: { requiresAuth: true }},
@@ -19,6 +21,8 @@ const routes = [
   {name: 'ssl', path: '/ssl', component: Ssl,meta: { requiresAuth: true } },
   {name: 'recipe', path: '/recipe', component: Recipe,meta: { requiresAuth: true } },
   {name: 'recipe_info', path: '/recipe_info', component: RecipeInfo,meta: { requiresAuth: true } },
+  {name: 'holiday', path: '/holiday', component: HolidayView,meta: { requiresAuth: true } },
+  {name: 'holiday_info', path: '/holiday_info', component: HolidayInfoView,meta: { requiresAuth: true } },
   {name: 'feedback', path: '/feedback', component: FeedbackView,meta: { requiresAuth: true } },
   {name: 'user_admin', path: '/user_admin', component:UserAdminView,meta: { requiresAuth: true } },
   {name: 'admin_info', path: '/admin_info', component:AdminInfoView,meta: { requiresAuth: true } },
