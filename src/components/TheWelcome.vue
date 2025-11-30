@@ -19,7 +19,7 @@ export default {
       unhandRecipeNum:0,
       options: {
         chart: {
-          id: 'vuechart'
+          id: 'userRegister'
         },
         xaxis: {
           categories: [],
@@ -33,7 +33,24 @@ export default {
           name: '游客新增数',
           data: []
         }
-      ]
+      ],
+      toolOptions: {
+        chart: {
+          id: 'toolStat'
+        },
+        xaxis: {
+          categories: [],
+        }
+      },
+      toolSeries: [{
+        name: '工具使用总量',
+        data: []
+      },
+        {
+          name: '工具今日使用量',
+          data: []
+        }
+      ],
     }
   },
   mounted() {
@@ -47,15 +64,21 @@ export default {
         params: {},
       }).then(res => {
         if (res.errno === 0) {
+          console.log(res)
           this.recipeNum = res.data.stats.all_recipe
           this.allFeedbackNum = res.data.stats.all_feedback
           this.unhandFeedbackNum = res.data.stats.unhandled_feedback
           this.unhandRecipeNum = res.data.stats.unhandled_recipe
           this.allUserNum = res.data.stats.all_user
           this.allVisitorNum = res.data.stats.all_visitor
+
           this.series = res.data.stats.user_stats
           for (let categoriesKey in res.data.stats.days.categories) {
             this.options.xaxis.categories.push(res.data.stats.days.categories[categoriesKey])
+          }
+          this.toolSeries = res.data.stats.tool_stats
+          for (let categoriesKey in res.data.stats.tool_xs.categories) {
+            this.toolOptions.xaxis.categories.push(res.data.stats.tool_xs.categories[categoriesKey])
           }
         }
       }).catch(error => {
@@ -112,6 +135,11 @@ export default {
       <n-space>
         <n-card title="用户每日注册数">
           <apexchart width="1200" height="300" type="bar" :options="options" :series="series"></apexchart>
+        </n-card>
+      </n-space>
+      <n-space>
+        <n-card title="工具使用统计">
+          <apexchart width="1600" height="300" type="bar" :options="toolOptions" :series="toolSeries"></apexchart>
         </n-card>
       </n-space>
       <n-space >
