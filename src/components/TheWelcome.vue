@@ -17,6 +17,7 @@ export default {
       unhandFeedbackNum:0,
       recipeNum:0,
       unhandRecipeNum:0,
+      toolInfos:[],
       options: {
         chart: {
           id: 'userRegister'
@@ -80,6 +81,7 @@ export default {
           for (let categoriesKey in res.data.stats.tool_xs.categories) {
             this.toolOptions.xaxis.categories.push(res.data.stats.tool_xs.categories[categoriesKey])
           }
+          this.toolInfos = res.data.stats.tool_infos
         }
       }).catch(error => {
         console.log(error);
@@ -140,6 +142,7 @@ export default {
       <n-space>
         <n-card title="工具使用统计">
           <apexchart width="1600" height="300" type="bar" :options="toolOptions" :series="toolSeries"></apexchart>
+          <n-space><n-tag v-for="v in toolInfos"> {{v}}</n-tag></n-space>
         </n-card>
       </n-space>
       <n-space >
