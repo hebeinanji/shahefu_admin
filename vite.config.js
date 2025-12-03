@@ -23,7 +23,6 @@ export default defineConfig({
     // port: 5173,
     proxy: {
       '/admin': {
-        // target: 'https://tool.shahefu.cn',
         target: 'http://127.0.0.1:8080',
         changeOrigin: true,
         pathRewrite: {
@@ -31,7 +30,6 @@ export default defineConfig({
         }
       },
       "/ai_img":{
-        // target: 'https://tool.shahefu.cn',
         target: 'http://127.0.0.1:8000',
         changeOrigin: true,
         pathRewrite: {

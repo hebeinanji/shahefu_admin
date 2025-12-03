@@ -141,7 +141,32 @@ export default {
               }
             );
           }
-        },
+        },{
+          addAutoDeployment(row){
+            window.$show = true
+            request.get("/admin/ssl/add_auto_deployment", {
+              params: {
+                certs_id: row.CertificateId,
+                domain: row.Domain,
+                validity_Begin_time:row.CertBeginTime,
+                validity_end_time:row.CertEndTime,
+                apply_time:row.InsertTime,
+              },
+            }).then(res => {
+              window.$show = false
+              if (res.errno === 0) {
+                window.$message.success("部署成功");
+              } else {
+                window.$message.error(res.err_msg);
+              }
+            }).catch(error => {
+              console.log(error);
+            }).finally(() => {
+
+              }
+            );
+          }
+        }
       ),
       pagination: true
     }
@@ -150,7 +175,7 @@ export default {
     this.fetchData()
   },
   methods: {
-    createColumns({download},{revoke},{del}, {deployment}) {
+    createColumns({download},{revoke},{del},{deployment},{addAutoDeployment}) {
       return [
         {
           title: "ID",
@@ -245,6 +270,23 @@ export default {
                 onClick: () => deployment(row)
               },
               { default: () => "部署证书" }
+            );
+          }
+        },
+        {
+          title: "添加到自动部署",
+          key: "auto_deployment",
+          render(row) {
+            return h(
+              NButton,
+              {
+                strong: true,
+                secondary:true,
+                type:"info",
+                size: "small",
+                onClick: () => addAutoDeployment(row)
+              },
+              { default: () => "添加到自动部署" }
             );
           }
         }

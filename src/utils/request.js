@@ -5,7 +5,7 @@ import router from '../router/index.js';
 const { message } = createDiscreteApi(["message"]);
 
 const service = axios.create({
-    timeout: 1000000, // 请求超时时间 10s
+    timeout: 3000000, // 请求超时时间 10s
 });
 
 // 请求拦截器
