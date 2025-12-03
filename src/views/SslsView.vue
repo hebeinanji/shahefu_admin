@@ -148,14 +148,14 @@ export default {
               params: {
                 certs_id: row.CertificateId,
                 domain: row.Domain,
-                validity_Begin_time:row.CertBeginTime,
+                validity_start_time:row.CertBeginTime,
                 validity_end_time:row.CertEndTime,
                 apply_time:row.InsertTime,
               },
             }).then(res => {
               window.$show = false
               if (res.errno === 0) {
-                window.$message.success("部署成功");
+                window.$message.success("插入任务成功");
               } else {
                 window.$message.error(res.err_msg);
               }
