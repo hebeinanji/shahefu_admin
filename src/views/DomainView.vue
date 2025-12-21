@@ -72,6 +72,15 @@
           </n-button>
         </RouterLink></td>
       </tr>
+      <tr>
+        <td>8</td>
+        <td>consul.shahefu.com</td>
+        <td><RouterLink to="/ssl?host=consul.shahefu.com">
+          <n-button strong secondary type="primary">
+            查看证书
+          </n-button>
+        </RouterLink></td>
+      </tr>
       </tbody>
     </n-table>
   </n-card>
