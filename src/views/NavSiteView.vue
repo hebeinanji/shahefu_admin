@@ -46,6 +46,13 @@
             </n-button>
           </n-space>
         </n-card>
+        <n-card title="配置注册中心">
+          <n-space>
+            <n-button type="info">
+              <a href="https://consul.shahefu.com:8469/ui/" target="_blank">Consul</a>
+            </n-button>
+          </n-space>
+        </n-card>
         <n-card title="流量分析">
           <n-space>
             <n-button type="info">
